@@ -75,6 +75,7 @@ public class PlayerHandler : MonoBehaviour
         }
         Destroy(gem.gameObject);
     }
+    //Added by Oscar \/
     void HazardInteraction(GameObject interacted)
     {
         
@@ -94,6 +95,7 @@ public class PlayerHandler : MonoBehaviour
             this.gameObject.SetActive(false);
         }
     }
+    //Added by Oscar /\
     void CollisionWithDeathObject(Transform death)
     {
         if (invincible)
@@ -129,10 +131,11 @@ public class PlayerHandler : MonoBehaviour
                 Invincibility();
                 Destroy(other.gameObject);
                 break;
-            //Added by oscar
-            case "Hazard":
-                HazardInteraction(other.gameObject);
-                break;
+            //Added by Oscar                            \/
+            case "Hazard":                              //
+                HazardInteraction(other.gameObject);    //
+                break;                                  //
+            //Added by Oscar                            /\
         }
     }
     void Start()

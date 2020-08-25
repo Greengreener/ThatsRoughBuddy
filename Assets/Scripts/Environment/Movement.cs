@@ -10,6 +10,7 @@ public class Movement : MonoBehaviour
     private float _speed;
     void Start()
     {
+        environment = GetComponentInParent<Environment>();
         _speed = environment.ObjectSpeed;
         _spawnPos = environment.SpawnPos;
         _despawnPos = environment.DespawnPos;

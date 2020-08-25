@@ -16,6 +16,7 @@ public class HazardControl : MonoBehaviour
     private Transform _spawnPos;
     void Start()
     {
+        environment = GetComponentInParent<Environment>();
         _speed = environment.ObjectSpeed;
         _despawnPos = environment.DespawnPos;
         _spawnPos = environment.SpawnPos;
@@ -40,7 +41,7 @@ public class HazardControl : MonoBehaviour
         sStepHazMesh.SetActive(false);
         jumpHazMesh.SetActive(false);
         crouchHazMesh.SetActive(false);
-        switch (Random.Range(0,3))
+        switch (Random.Range(0,4))
         {
             case 1:
                 sStepHazMesh.SetActive(true);
