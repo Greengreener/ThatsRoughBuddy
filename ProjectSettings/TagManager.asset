@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Death
+  - Gem
+  - Power Up
+  - Ground
+  - Object Catcher
+  - Hazard
   layers:
   - Default
   - TransparentFX
