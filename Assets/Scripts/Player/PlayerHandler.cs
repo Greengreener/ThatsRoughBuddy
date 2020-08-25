@@ -75,6 +75,25 @@ public class PlayerHandler : MonoBehaviour
         }
         Destroy(gem.gameObject);
     }
+    void HazardInteraction(GameObject interacted)
+    {
+        
+        if(invincible)
+        {
+            interacted.SetActive(false);
+        }
+        else if (armour)
+        {
+            armour = false;
+            armourPercent = 0;
+            armourCollectionPercentDisplay.value = armourPercent;
+            interacted.SetActive(false);
+        }
+        else 
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
     void CollisionWithDeathObject(Transform death)
     {
         if (invincible)
@@ -109,6 +128,10 @@ public class PlayerHandler : MonoBehaviour
             case "Power Up":
                 Invincibility();
                 Destroy(other.gameObject);
+                break;
+            //Added by oscar
+            case "Hazard":
+                HazardInteraction(other.gameObject);
                 break;
         }
     }
