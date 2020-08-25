@@ -12,7 +12,7 @@ public class HazardControl : MonoBehaviour
     public GameObject crouchHazMesh; // Crouch hazard
     [Header("Movement")]
     private float _speed;
-    private float _despawnPos;
+    private Transform _despawnPos;
     private Transform _spawnPos;
     void Start()
     {
@@ -29,7 +29,7 @@ public class HazardControl : MonoBehaviour
         _spawnPos = environment.SpawnPos;
         hazGroup.transform.Translate(new Vector3(0, 0, _speed));
 
-        if (hazGroup.transform.position.z <= _despawnPos)
+        if (hazGroup.transform.position.z <= _despawnPos.transform.position.z)
         {
             ResetAndRandom();
             hazGroup.transform.SetPositionAndRotation(_spawnPos.transform.position, Quaternion.identity);

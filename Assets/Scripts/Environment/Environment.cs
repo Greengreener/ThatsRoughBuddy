@@ -6,8 +6,8 @@ public class Environment : MonoBehaviour
 {
     public Transform SpawnPos { get; set; }
     public Transform spawnPos;
-    public float DespawnPos { get; set; }
-    public float despawnPos;
+    public Transform DespawnPos { get; set; }
+    public Transform despawnPos;
     public float ObjectSpeed { get; set; }
     public float objectSpeed;
     void Awake()
