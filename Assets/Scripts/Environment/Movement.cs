@@ -20,7 +20,6 @@ public class Movement : MonoBehaviour
         _speed = environment.ObjectSpeed;
         _despawnPos = environment.DespawnPos;
         _spawnPos = environment.SpawnPos;
-
         this.transform.Translate(new Vector3(0, 0, _speed));
         if (this.gameObject.transform.position.z <= _despawnPos.transform.position.z)
         {
