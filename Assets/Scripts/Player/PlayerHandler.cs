@@ -24,7 +24,7 @@ public class PlayerHandler : MonoBehaviour
     bool sliding;
     [Header("Gem Collection")]
     public Text gemsDisplay;
-    int gems;
+    public int gems;
     float gemArmourValue = 0.25f;
     [Header("Armour")]
     public bool armour;
