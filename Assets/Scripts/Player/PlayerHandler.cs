@@ -7,46 +7,42 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public class PlayerHandler : MonoBehaviour
 {
-    #region Old Code
-    //public List<GameObject> dodgePoints = new List<GameObject>();//the points the player moves to when dodging
-    //public bool jumping = false;
-    //public bool isGrounded;
-    /*distanceDisplaythe text used to display the distance travelled by the player*/
-    #endregion
     #region Variables
     [Header("Dodging")]
-    CharacterController charControl;//the player character controller
-    public bool dodging = false, returning = false;//used to move the player to the dodge postitions and to check if they are dodging for physics
-    public Transform playerOrigin;//the players neutral position
-    public float glitchDistance = 0.2f/*the distance used to check if the player has reached the return point*/, dodgeDistance = 5f/*the distance from the origin the player will dodge*/, movementSpeed = 5f/*the speed the player will move while dodging*/;
-    int dodgeDirection;//used in Dodge() and Update() to determine which direction the player is dodging
+    CharacterController charControl;
+    public bool dodging = false, returning = false;
+    public Transform returnPoint;
+    public List<GameObject> dodgePoints = new List<GameObject>();
+    public float glitchDistance = 0.2f, dodgeDistance = 5f, movementSpeed = 5f;
+    int dodgeDirection;
     [Header("Jumping and Gravity")]
-    public float jumpSpeed = 50.0f/*the speed the player jumps at, used in Update()*/, gravity = -10.0f;
-    Vector3 velocity;//the players movement vector used in Update() for jumping and gravity
+    public float jumpSpeed = 50.0f, gravity = -10.0f;
+    public bool jumping = false;
+    Vector3 velocity;
     [Header("Sliding")]
     float slideTimeStamp, slideTime = 1.5f;
     bool sliding;
     [Header("Gem Collection")]
-    public int gems;//number of gems collected by player
-    float gemArmourValue = 0.25f;//the percent that each gem will fill the armour meter to reharge their armour
+    public Text gemsDisplay;
+    int gems;
+    float gemArmourValue = 0.25f;
     [Header("Armour")]
-    public bool armour;//determines if the player has armour
-    float armourPercent;//the percentage the armour has been recharged by gems being collected
-    public Slider armourCollectionPercentDisplay;//the slider used to display the armour percentage
-    [Header("Invincibility")]
-    public bool invincible;//determines if the player is invincible
-    public float invincibleTimeStamp;//the time stamp when the player last collected the power up, set in Invincibility() and checked in Update()
-    public float timeLimit = 20f;//the time that the players power up will stay active, checked against invincibleTimeStamp in Update()
+    public bool armour;
+    float armourPercent;
+    public Slider armourCollectionPercentDisplay;
+    [Header("Power Ups")]
+    public bool invincible;
+    public float invincibleTimeStamp;
+    public float timeLimit = 20f;
+    [Header("Test")]
+    MeshRenderer charMesh;
     [Header("Annimation")]
-    public Animator playerAnimator;//the players animator
+    public Animator playerAnimator;
+    public bool isGrounded;
     public LayerMask groundLayerMask;
-    [Header("Score/Display")]
-    public Text gemsDisplay/*the text used to display the number of gems collected by the player*/;
-    public float distance;//the distance travelled by the player
-    public GameObject deathScreen;//UI panel that is actived when the player dies to display their score
     #endregion
     #region Functions
-    void Dodge(int direction)//used to set dodging true, which is checked in Update()
+    void Dodge(int direction)
     {
         dodging = true;
         dodgeDirection = direction;
@@ -59,22 +55,18 @@ public class PlayerHandler : MonoBehaviour
         playerAnimator.Play("Slide");
         slideTimeStamp = Time.time;
     }
-    void Invincibility()//used to set invincibility true, which is checked in Update(), also sets invincibleTimeStamp
+    void Invincibility()
     {
         invincible = true;
         invincibleTimeStamp = Time.time;
     }
-    void Death()
-    {
-        deathScreen.SetActive(true);
-    }
     void GemCollection(Transform gem)
     {
-        gems++;//increases number of gems collected
-        gemsDisplay.text = "Gems: " + gems.ToString();//sets the UI to display the new number of gems
-        if (!armour)//if the player does not have armour
+        gems++;
+        gemsDisplay.text = "Gems: " + gems.ToString();
+        if (!armour)
         {
-            armourPercent += gemArmourValue;//increase the armourPercent by gemArmourValue
+            armourPercent += gemArmourValue;
             if (armourPercent >= 1)
             {
                 armour = true;
@@ -100,15 +92,38 @@ public class PlayerHandler : MonoBehaviour
         }
         else 
         {
-            Death();
             this.gameObject.SetActive(false);
         }
     }
     //Added by Oscar /\
+    void CollisionWithDeathObject(Transform death)
+    {
+        if (invincible)
+        {
+            Destroy(death.gameObject);
+        }
+        else if (armour)
+        {
+            armour = false;
+            armourPercent = 0;
+            armourCollectionPercentDisplay.value = armourPercent;
+            Destroy(death.gameObject);
+        }
+        else
+        {
+            Application.Quit();
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         switch (other.transform.tag)
         {
+            case "Death":
+                CollisionWithDeathObject(other.transform);
+                break;
             case "Gem":
                 GemCollection(other.transform);
                 break;
@@ -117,40 +132,45 @@ public class PlayerHandler : MonoBehaviour
                 Destroy(other.gameObject);
                 break;
             //Added by Oscar                            \/
-            case "Hazard":                              
-                HazardInteraction(other.gameObject);    
-                break;                                
+            case "Hazard":                              //
+                HazardInteraction(other.gameObject);    //
+                break;                                  //
             //Added by Oscar                            /\
         }
     }
     void Start()
     {
         charControl = gameObject.GetComponent<CharacterController>();
-        transform.position = playerOrigin.position;
+        charMesh = gameObject.GetComponent<MeshRenderer>();
+        transform.position = returnPoint.position;
         playerAnimator = gameObject.GetComponent<Animator>();
     }
     #endregion
     void Update()
     {
-        Debug.Log(charControl.isGrounded);
-        if (charControl.isGrounded/* && !sliding*/)
+        Debug.Log(playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Running"));
+        if (charControl.isGrounded && !sliding/*playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Running")*/)
         {
             if (Input.GetAxis("Horizontal") < 0)
             {
-                Dodge(-1);
+                //Dodge(-1);
+                playerAnimator.Play("Dodge Left");
             }
             if (Input.GetAxis("Horizontal") > 0)
             {
-                Dodge(1);
+                playerAnimator.Play("Dodge Right");
+                //Dodge(1);
             }
             if (Input.GetAxis("Vertical") < 0)
             {
-                Slide();
+                playerAnimator.Play("Slide");
+                //Slide();
             }
             if (Input.GetButtonDown("Jump"))
             {
+                playerAnimator.Play("Jump");
                 Debug.Log("jump");
-                velocity.y += jumpSpeed;
+                //velocity.y = jumpSpeed;
             }
         }
         /*if (sliding && Time.time - slideTimeStamp > slideTime)
@@ -166,26 +186,26 @@ public class PlayerHandler : MonoBehaviour
                 invincible = false;
             }
         }
+        if (charControl.isGrounded && velocity.y < 0)
+        {
+            velocity.y = -1f;
+        }
         if (dodging)
         {
             charControl.Move(Vector3.right * dodgeDirection * movementSpeed * Time.deltaTime);
-            if (Vector3.Distance(playerOrigin.position, transform.position) > dodgeDistance)
+            if (Vector3.Distance(returnPoint.position, transform.position) > dodgeDistance)
             {
                 dodging = false;
                 returning = true;
             }
         }
-        else if (charControl.isGrounded && velocity.y < 0)
-        {
-            velocity.y = -1f;
-        }
         else if (returning)
         {
             charControl.Move(Vector3.right * dodgeDirection * -1 * movementSpeed * Time.deltaTime);
-            if (Vector3.Distance(playerOrigin.position, transform.position) < glitchDistance)
+            if (Vector3.Distance(returnPoint.position, transform.position) < glitchDistance)
             {
                 returning = false;
-                transform.position = playerOrigin.position;
+                transform.position = returnPoint.position;
             }
         }
         else
@@ -193,6 +213,5 @@ public class PlayerHandler : MonoBehaviour
             velocity.y -= gravity * Time.deltaTime;
             charControl.Move(velocity * Time.deltaTime);
         }
-        distance += movementSpeed * Time.deltaTime;
     }
 }
