@@ -24,7 +24,7 @@ public class PlayerHandler : MonoBehaviour
     bool sliding;
     [Header("Gem Collection")]
     public Text gemsDisplay;
-    public int gems;
+    public static int gems;
     float gemArmourValue = 0.25f;
     [Header("Armour")]
     public bool armour;
@@ -40,6 +40,12 @@ public class PlayerHandler : MonoBehaviour
     public Animator playerAnimator;
     public bool isGrounded;
     public LayerMask groundLayerMask;
+    [Header("Distance")]
+    float speed = 5f;
+    public static float distance;
+    [SerializeField]
+    [Header("Death")]
+    GameObject deathDisplayPanel;
     #endregion
     #region Functions
     void Dodge(int direction)
@@ -92,38 +98,15 @@ public class PlayerHandler : MonoBehaviour
         }
         else 
         {
+            deathDisplayPanel.SetActive(true);
             this.gameObject.SetActive(false);
         }
     }
     //Added by Oscar /\
-    void CollisionWithDeathObject(Transform death)
-    {
-        if (invincible)
-        {
-            Destroy(death.gameObject);
-        }
-        else if (armour)
-        {
-            armour = false;
-            armourPercent = 0;
-            armourCollectionPercentDisplay.value = armourPercent;
-            Destroy(death.gameObject);
-        }
-        else
-        {
-            Application.Quit();
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#endif
-        }
-    }
     private void OnTriggerEnter(Collider other)
     {
         switch (other.transform.tag)
         {
-            case "Death":
-                CollisionWithDeathObject(other.transform);
-                break;
             case "Gem":
                 GemCollection(other.transform);
                 break;
@@ -165,7 +148,7 @@ public class PlayerHandler : MonoBehaviour
             }
             if (Input.GetButtonDown("Jump"))
             {
-                velocity.y = jumpSpeed;
+                velocity.y += jumpSpeed;
             }
         }
         /*if (sliding && Time.time - slideTimeStamp > slideTime)
@@ -208,5 +191,6 @@ public class PlayerHandler : MonoBehaviour
             velocity.y -= gravity * Time.deltaTime;
             charControl.Move(velocity * Time.deltaTime);
         }
+        distance += speed * Time.deltaTime;
     }
 }
