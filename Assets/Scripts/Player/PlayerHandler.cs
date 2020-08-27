@@ -148,29 +148,24 @@ public class PlayerHandler : MonoBehaviour
     #endregion
     void Update()
     {
-        Debug.Log(playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Running"));
-        if (charControl.isGrounded && !sliding/*playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Running")*/)
+        Debug.Log(charControl.isGrounded);
+        if (charControl.isGrounded/*playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Running")*/)
         {
             if (Input.GetAxis("Horizontal") < 0)
             {
-                //Dodge(-1);
-                playerAnimator.Play("Dodge Left");
+                Dodge(-1);
             }
             if (Input.GetAxis("Horizontal") > 0)
             {
-                playerAnimator.Play("Dodge Right");
-                //Dodge(1);
+                Dodge(1);
             }
             if (Input.GetAxis("Vertical") < 0)
             {
-                playerAnimator.Play("Slide");
-                //Slide();
+                Slide();
             }
             if (Input.GetButtonDown("Jump"))
             {
-                playerAnimator.Play("Jump");
-                Debug.Log("jump");
-                //velocity.y = jumpSpeed;
+                velocity.y = jumpSpeed;
             }
         }
         /*if (sliding && Time.time - slideTimeStamp > slideTime)
@@ -188,7 +183,7 @@ public class PlayerHandler : MonoBehaviour
         }
         if (charControl.isGrounded && velocity.y < 0)
         {
-            velocity.y = -1f;
+            velocity.y = 0;
         }
         if (dodging)
         {
