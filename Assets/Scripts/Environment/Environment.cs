@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Environment : MonoBehaviour
 {
+    public GameObject Player { get; set; }
+    public GameObject player;
     public Transform SpawnPos { get; set; }
     public Transform spawnPos;
     public Transform DespawnPos { get; set; }
@@ -15,9 +17,11 @@ public class Environment : MonoBehaviour
         SpawnPos = spawnPos;
         DespawnPos = despawnPos;
         ObjectSpeed = objectSpeed;
+        Player = player;
     }
     void FixedUpdate()
     {
+        Player = player;
         SpawnPos = spawnPos;
         DespawnPos = despawnPos;
         ObjectSpeed = objectSpeed;

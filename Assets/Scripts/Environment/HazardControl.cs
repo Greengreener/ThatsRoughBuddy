@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HazardControl : MonoBehaviour
 {
+    private GameObject _player;
     public Environment environment;
     [Header("Hazards")]
     public GameObject hazGroup;      // Hazard grouping
@@ -20,9 +21,8 @@ public class HazardControl : MonoBehaviour
         _speed = environment.ObjectSpeed;
         _despawnPos = environment.DespawnPos;
         _spawnPos = environment.SpawnPos;
+        _player = environment.Player;
     }
-
-    // Update is called once per frame
     void FixedUpdate()  
     {
         _speed = environment.ObjectSpeed;
@@ -35,8 +35,12 @@ public class HazardControl : MonoBehaviour
             ResetAndRandom();
             hazGroup.transform.SetPositionAndRotation(_spawnPos.transform.position, Quaternion.identity);
         }
+        if (_player.activeSelf == false)
+        {
+            Stopped();
+        }
     }
-    void ResetAndRandom()
+    void ResetAndRandom() //Resets active hazards and sets a random hazard active
     {
         sStepHazMesh.SetActive(false);
         jumpHazMesh.SetActive(false);
@@ -53,5 +57,11 @@ public class HazardControl : MonoBehaviour
                 crouchHazMesh.SetActive(true);
                 break;
         }
+    }
+    private void Stopped() //Stops all Hazards from spawning
+    {
+        sStepHazMesh.SetActive(false);
+        jumpHazMesh.SetActive(false);
+        crouchHazMesh.SetActive(false);
     }
 }
