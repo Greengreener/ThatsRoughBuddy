@@ -10,6 +10,7 @@ TagManager:
   - Ground
   - Object Catcher
   - Hazard
+  - PauseMenu
   layers:
   - Default
   - TransparentFX

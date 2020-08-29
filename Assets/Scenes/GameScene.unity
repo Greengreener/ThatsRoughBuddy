@@ -4998,6 +4998,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   deathDisplayPanel: {fileID: 546458874}
+  pauseMenuPanel: {fileID: 1575639506}
 --- !u!95 &1119326827
 Animator:
   serializedVersion: 3
@@ -6274,7 +6275,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1573523096}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1119326826}
+        m_MethodName: PauseToggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1573523096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6324,11 +6336,11 @@ GameObject:
   - component: {fileID: 1575639508}
   m_Layer: 5
   m_Name: Pause Panel
-  m_TagString: Untagged
+  m_TagString: PauseMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1575639507
 RectTransform:
   m_ObjectHideFlags: 0

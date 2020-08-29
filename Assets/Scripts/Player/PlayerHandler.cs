@@ -46,6 +46,10 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField]
     [Header("Death")]
     GameObject deathDisplayPanel;
+    [Header("Pause")]
+    [SerializeField]
+    GameObject pauseMenuPanel;
+    public static bool paused;
     #endregion
     #region Functions
     void Dodge(int direction)
@@ -80,6 +84,21 @@ public class PlayerHandler : MonoBehaviour
             armourCollectionPercentDisplay.value = armourPercent;
         }
         Destroy(gem.gameObject);
+    }
+    public void PauseToggle()//To be used by resume button in pause menu and in Update()
+    {
+        if (paused)
+        {
+            Time.timeScale = 1;//resume game time
+            pauseMenuPanel.SetActive(false);//set the pause menu inactive
+            paused = false;//set paused false
+        }
+        else
+        {
+            Time.timeScale = 0;//stop game time
+            pauseMenuPanel.SetActive(true);//set the pause menu active
+            paused = true;//set paused true
+        }
     }
     //Added by Oscar \/
     void HazardInteraction(GameObject interacted)
@@ -127,7 +146,7 @@ public class PlayerHandler : MonoBehaviour
         charMesh = gameObject.GetComponent<MeshRenderer>();
         transform.position = returnPoint.position;
         playerAnimator = gameObject.GetComponent<Animator>();
-        //distance = 0;
+        distance = 0;
     }
     #endregion
     void Update()
@@ -151,10 +170,9 @@ public class PlayerHandler : MonoBehaviour
                 velocity.y += jumpSpeed;
             }
         }
-        if(Input.GetKeyDown(KeyCode.P))
+        if(Input.GetButtonDown("Cancel"))
         {
-            distance += 100;
-            Debug.Log(distance);
+            PauseToggle();
         }
         /*if (sliding && Time.time - slideTimeStamp > slideTime)
         {
