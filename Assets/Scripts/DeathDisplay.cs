@@ -19,10 +19,9 @@ public class DeathDisplay : MonoBehaviour
     }
     private void Update()
     {
-        if(distanceDisplay < PlayerHandler.distance)//if distanceDisplay is less than the players travelled distance
+        for (int i = 0; i < PlayerHandler.distance; i++)
         {
-            distanceDisplay++;//increase distance display
-            distance.text = "Distance: " + distanceDisplay.ToString();//set text to equal distance display
+            distance.text = "Distance: " + i.ToString();
         }
     }
 }

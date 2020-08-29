@@ -127,11 +127,11 @@ public class PlayerHandler : MonoBehaviour
         charMesh = gameObject.GetComponent<MeshRenderer>();
         transform.position = returnPoint.position;
         playerAnimator = gameObject.GetComponent<Animator>();
+        //distance = 0;
     }
     #endregion
     void Update()
     {
-        Debug.Log(charControl.isGrounded);
         if (charControl.isGrounded/*playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Running")*/)
         {
             if (Input.GetAxis("Horizontal") < 0)
@@ -150,6 +150,11 @@ public class PlayerHandler : MonoBehaviour
             {
                 velocity.y += jumpSpeed;
             }
+        }
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            distance += 100;
+            Debug.Log(distance);
         }
         /*if (sliding && Time.time - slideTimeStamp > slideTime)
         {
