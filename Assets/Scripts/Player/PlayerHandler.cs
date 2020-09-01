@@ -147,6 +147,7 @@ public class PlayerHandler : MonoBehaviour
         transform.position = returnPoint.position;
         playerAnimator = gameObject.GetComponent<Animator>();
         distance = 0;
+        gems = 0;
     }
     #endregion
     void Update()
