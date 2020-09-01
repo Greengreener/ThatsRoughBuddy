@@ -19,9 +19,10 @@ public class DeathDisplay : MonoBehaviour
     }
     private void Update()
     {
-        for (int i = 0; i < PlayerHandler.distance; i++)
+        if(distanceDisplay < PlayerHandler.distance)
         {
-            distance.text = "Distance: " + i.ToString();
+            distanceDisplay++;
+            distance.text = "Distance: " + distanceDisplay.ToString();
         }
     }
 }
