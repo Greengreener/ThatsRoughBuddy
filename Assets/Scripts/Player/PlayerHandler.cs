@@ -13,7 +13,7 @@ public class PlayerHandler : MonoBehaviour
     public bool dodging = false, returning = false;
     public Transform returnPoint;
     public List<GameObject> dodgePoints = new List<GameObject>();
-    public float glitchDistance = 0.2f, dodgeDistance = 5f, movementSpeed = 5f;
+    public float glitchDistance = 1f, dodgeDistance = 5f, movementSpeed = 5f;
     int dodgeDirection;
     [Header("Jumping and Gravity")]
     public float jumpSpeed = 50.0f, gravity = -10.0f;
@@ -202,7 +202,7 @@ public class PlayerHandler : MonoBehaviour
         }
         else if (returning)
         {
-            charControl.Move(/*Vector3.right * dodgeDirection * -1*/(returnPoint.position - transform.position) * movementSpeed * Time.deltaTime);
+            charControl.Move(Vector3.right * dodgeDirection * -1 * movementSpeed * Time.deltaTime);
             if (Vector3.Distance(returnPoint.position, transform.position) < glitchDistance)
             {
                 returning = false;
