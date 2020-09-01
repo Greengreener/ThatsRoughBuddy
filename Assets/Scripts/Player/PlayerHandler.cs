@@ -174,12 +174,12 @@ public class PlayerHandler : MonoBehaviour
         {
             PauseToggle();
         }
-        /*if (sliding && Time.time - slideTimeStamp > slideTime)
+        if (sliding && Time.time - slideTimeStamp > slideTime)
         {
             playerAnimator.StopPlayback();
             sliding = false;
             playerAnimator.enabled = false;
-        }*/
+        }
         if (invincible)
         {
             if (Time.time - invincibleTimeStamp > timeLimit)
