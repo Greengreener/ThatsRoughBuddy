@@ -9,7 +9,7 @@ public class DeathDisplay : MonoBehaviour
     GameObject HUDPanel;//the players HUD display panel, set inactive on start
     [SerializeField]
     Text gems, distance;//text elements to display the distance travelled and the number of gems collected
-    int distanceDisplay;//used to display the players distance, counting up from 0 after their death
+    float distanceDisplay, gemDisplay;//used to display the players distance, counting up from 0 after their death
     void Start()
     {
         HUDPanel.SetActive(false);//set HUD Panel inactive
@@ -21,8 +21,13 @@ public class DeathDisplay : MonoBehaviour
     {
         if(distanceDisplay < PlayerHandler.distance)
         {
-            distanceDisplay++;
+            distanceDisplay += 0.5f;
             distance.text = "Distance: " + distanceDisplay.ToString();
+        }
+        if (gemDisplay < PlayerHandler.gems)
+        {
+            gemDisplay += 0.5f;
+            distance.text = "Gems: " + gems.ToString();
         }
     }
 }
