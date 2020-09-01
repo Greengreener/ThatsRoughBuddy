@@ -13,21 +13,21 @@ public class DeathDisplay : MonoBehaviour
     void Start()
     {
         HUDPanel.SetActive(false);//set HUD Panel inactive
-        //set the text elements to display the players score
-        gems.text = "Gems: " + PlayerHandler.gems.ToString();
+        //set the display floats to 0
         distanceDisplay = 0;
+        gemDisplay = 0;
     }
     private void Update()
     {
-        if(distanceDisplay < PlayerHandler.distance)
+        if(distanceDisplay < PlayerHandler.distance)//if the display float is less than distance
         {
-            distanceDisplay += 0.5f;
-            distance.text = "Distance: " + distanceDisplay.ToString();
+            distanceDisplay++;//increase display float 
+            distance.text = "Distance: " + distanceDisplay.ToString();//set text UI to equal display float
         }
-        if (gemDisplay < PlayerHandler.gems)
+        if (gemDisplay < PlayerHandler.gems)//if the display float is less than gems
         {
-            gemDisplay += 0.5f;
-            distance.text = "Gems: " + gems.ToString();
+            gemDisplay++;//increase display float 
+            distance.text = "Gems: " + gems.ToString();//set text UI to equal display float
         }
     }
 }
