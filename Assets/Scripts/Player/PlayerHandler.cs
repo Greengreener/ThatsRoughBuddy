@@ -166,7 +166,7 @@ public class PlayerHandler : MonoBehaviour
             {
                 Slide();
             }
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump") || Input.GetAxis("Vertical") > 0)
             {
                 velocity.y += jumpSpeed;
             }
