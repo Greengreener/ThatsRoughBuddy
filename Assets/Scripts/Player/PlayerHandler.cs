@@ -151,7 +151,7 @@ public class PlayerHandler : MonoBehaviour
     #endregion
     void Update()
     {
-        if (charControl.isGrounded/*playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Running")*/)
+        if (/*charControl.isGrounded ||*/ Physics.Raycast(transform.position, Vector3.down, 1.1f, groundLayerMask))
         {
             if (Input.GetAxis("Horizontal") < 0)
             {
@@ -202,7 +202,7 @@ public class PlayerHandler : MonoBehaviour
         }
         else if (returning)
         {
-            charControl.Move(Vector3.right * dodgeDirection * -1 * movementSpeed * Time.deltaTime);
+            charControl.Move(/*Vector3.right * dodgeDirection * -1*/(returnPoint.position - transform.position) * movementSpeed * Time.deltaTime);
             if (Vector3.Distance(returnPoint.position, transform.position) < glitchDistance)
             {
                 returning = false;
