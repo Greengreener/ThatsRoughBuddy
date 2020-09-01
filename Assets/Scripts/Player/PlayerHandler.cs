@@ -16,7 +16,7 @@ public class PlayerHandler : MonoBehaviour
     public float glitchDistance = 1f, dodgeDistance = 5f, movementSpeed = 5f;
     int dodgeDirection;
     [Header("Jumping and Gravity")]
-    public float jumpSpeed = 50.0f, gravity = -10.0f;
+    public float jumpSpeed = 6.0f, gravity = -10.0f;
     public bool jumping = false;
     Vector3 velocity;
     [Header("Sliding")]
