@@ -4983,7 +4983,7 @@ MonoBehaviour:
   glitchDistance: 0.1
   dodgeDistance: 3
   movementSpeed: 5
-  jumpSpeed: 7
+  jumpSpeed: 6
   gravity: 10
   jumping: 0
   gemsDisplay: {fileID: 729493890}
