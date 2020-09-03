@@ -2565,7 +2565,7 @@ GameObject:
   - component: {fileID: 729493890}
   m_Layer: 5
   m_Name: Gems Collected
-  m_TagString: Untagged
+  m_TagString: GemDisplay
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3198,7 +3198,7 @@ GameObject:
   - component: {fileID: 824618022}
   m_Layer: 5
   m_Name: Armour Collection Slider
-  m_TagString: Untagged
+  m_TagString: ArmourDisplay
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4974,26 +4974,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73e4c474c92221d4894fb998e3d6382f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dodging: 0
-  returning: 0
   returnPoint: {fileID: 1851213511}
-  dodgePoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  glitchDistance: 0.1
-  dodgeDistance: 3
-  movementSpeed: 5
-  jumpSpeed: 6
-  gravity: 10
-  jumping: 0
   gemsDisplay: {fileID: 729493890}
-  armour: 0
   armourCollectionPercentDisplay: {fileID: 824618022}
-  invincible: 0
-  invincibleTimeStamp: 0
-  timeLimit: 20
-  playerAnimator: {fileID: 0}
-  isGrounded: 0
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256

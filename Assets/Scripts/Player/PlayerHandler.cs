@@ -10,42 +10,46 @@ public class PlayerHandler : MonoBehaviour
     #region Variables
     [Header("Dodging")]
     CharacterController charControl;
-    public bool dodging = false, returning = false;
-    public Transform returnPoint;
-    public List<GameObject> dodgePoints = new List<GameObject>();
-    public float glitchDistance = 1f, dodgeDistance = 5f, movementSpeed = 5f;
+    bool dodging = false, returning = false;
+    [SerializeField]
+    Transform returnPoint;
+    List<GameObject> dodgePoints = new List<GameObject>();
+    float glitchDistance = 0.5f, dodgeDistance = 3f, movementSpeed = 5f;
     int dodgeDirection;
     [Header("Jumping and Gravity")]
-    public float jumpSpeed = 6.0f, gravity = -10.0f;
-    public bool jumping = false;
+    float jumpSpeed = 8.0f, gravity = 10.0f;
+    bool jumping = false;
     Vector3 velocity;
     [Header("Sliding")]
     float slideTimeStamp, slideTime = 1.5f;
     bool sliding;
+    [SerializeField]
     [Header("Gem Collection")]
-    public Text gemsDisplay;
+    Text gemsDisplay;
     public static int gems;
     float gemArmourValue = 0.25f;
     [Header("Armour")]
-    public bool armour;
+    bool armour;
     float armourPercent;
-    public Slider armourCollectionPercentDisplay;
+    [SerializeField]
+    Slider armourCollectionPercentDisplay;
     [Header("Power Ups")]
-    public bool invincible;
-    public float invincibleTimeStamp;
-    public float timeLimit = 20f;
+    bool invincible;
+    float invincibleTimeStamp;
+    float timeLimit = 20f;
     [Header("Test")]
     MeshRenderer charMesh;
     [Header("Annimation")]
-    public Animator playerAnimator;
-    public bool isGrounded;
-    public LayerMask groundLayerMask;
+    Animator playerAnimator;
+    bool isGrounded;
+    [SerializeField]
+    LayerMask groundLayerMask;
     [Header("Distance")]
     float speed = 5f;
     public static float distance;
     [SerializeField]
     [Header("Death")]
-    GameObject deathDisplayPanel;
+    public GameObject deathDisplayPanel;
     [Header("Pause")]
     [SerializeField]
     GameObject pauseMenuPanel;
@@ -142,17 +146,24 @@ public class PlayerHandler : MonoBehaviour
     }
     void Start()
     {
+        //Set reference variables on the player object
         charControl = gameObject.GetComponent<CharacterController>();
         charMesh = gameObject.GetComponent<MeshRenderer>();
-        transform.position = returnPoint.position;
         playerAnimator = gameObject.GetComponent<Animator>();
+        //Set reference variables on other objects by tag
+        //returnPoint = GameObject.FindGameObjectWithTag("ReturnPoint").transform;
+        //gemsDisplay = GameObject.FindGameObjectWithTag("GemDisplay").GetComponent<Text>();
+        //armourCollectionPercentDisplay = GameObject.FindGameObjectWithTag("ArmourDisplay").GetComponent<Slider>();
+        //Set players position to middle position
+        transform.position = returnPoint.position;
+        //Reset display variables to 0 for play session
         distance = 0;
         gems = 0;
     }
     #endregion
     void Update()
     {
-        if (/*charControl.isGrounded ||*/ Physics.Raycast(transform.position, Vector3.down, 1.1f, groundLayerMask))
+        if (/*charControl.isGrounded ||*/ Physics.Raycast(transform.position, Vector3.down, 1.1f, groundLayerMask) && !sliding && !dodging && !returning)
         {
             if (Input.GetAxis("Horizontal") < 0)
             {

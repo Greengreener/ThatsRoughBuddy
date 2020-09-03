@@ -11,6 +11,9 @@ TagManager:
   - Object Catcher
   - Hazard
   - PauseMenu
+  - ReturnPoint
+  - GemDisplay
+  - ArmourDisplay
   layers:
   - Default
   - TransparentFX

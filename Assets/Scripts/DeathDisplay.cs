@@ -27,7 +27,7 @@ public class DeathDisplay : MonoBehaviour
         if (gemDisplay < PlayerHandler.gems)//if the display float is less than gems
         {
             gemDisplay++;//increase display float 
-            gems.text = "Gems: " + gems.ToString();//set text UI to equal display float
+            gems.text = "Gems: " + gemDisplay.ToString();//set text UI to equal display float
         }
     }
 }
