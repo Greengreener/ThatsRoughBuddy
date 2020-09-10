@@ -10,13 +10,14 @@ public class PlayerHandler : MonoBehaviour
     #region Variables
     [Header("Dodging")]
     CharacterController charControl;
-    bool dodging = false, returning = false;
+    bool dodging = false, returning = false;//used in update to determine if the player is dodging
     [SerializeField]
-    Transform returnPoint;
-    List<GameObject> dodgePoints = new List<GameObject>();
-    float glitchDistance = 0.5f, dodgeDistance = 3f, movementSpeed = 5f;
-    int dodgeDirection;
+    Transform returnPoint;//the centre point for the player, used to return them to the centre after dodging
+    [SerializeField]
+    float glitchDistance = 0.5f/*used in Update to check if the player is at the returnPoint*/, dodgeDistance = 3f/*the distance from the return point that the dodge ends*/, movementSpeed = 5f/*the speed the player moves while doding*/;
+    int dodgeDirection;//used in Dodge() to determine the direction the player is dodging
     [Header("Jumping and Gravity")]
+    [SerializeField]
     float jumpSpeed = 8.0f, gravity = 10.0f;
     bool jumping = false;
     Vector3 velocity;
