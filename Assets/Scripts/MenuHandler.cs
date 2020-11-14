@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuHandler : MonoBehaviour
+namespace Bloopy.UI
 {
-    public void LoadScene(int sceneID)
+    public class MenuHandler : MonoBehaviour
     {
-        SceneManager.LoadScene(sceneID);
-    }
-    public void ExitGame()
-    {
+        public void LoadScene(int sceneID)
+        {
+            SceneManager.LoadScene(sceneID);
+        }
+        public void ExitGame()
+        {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
-        Application.Quit();
+            Application.Quit();
+        }
     }
 }

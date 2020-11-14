@@ -19,7 +19,6 @@ public class PlayerHandler : MonoBehaviour
     [Header("Jumping and Gravity")]
     [SerializeField]
     float jumpSpeed = 8.0f, gravity = 10.0f;
-    bool jumping = false;
     Vector3 velocity;
     [Header("Sliding")]
     float slideTimeStamp, slideTime = 1.5f;
